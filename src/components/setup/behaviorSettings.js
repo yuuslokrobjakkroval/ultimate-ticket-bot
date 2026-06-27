@@ -195,7 +195,10 @@ async function openBehaviorModal(interaction, sub) {
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
             .setCustomId("format")
-            .setLabel("Format: {username} {userid} {number} {category}")
+            .setLabel("Channel format")
+            .setPlaceholder(
+              "Use tokens: {username} {userid} {number} {category}",
+            )
             .setStyle(TextInputStyle.Short)
             .setValue(b.namingFormat)
             .setRequired(true),
