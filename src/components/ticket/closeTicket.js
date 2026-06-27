@@ -82,7 +82,16 @@ async function closeTicketChannel(
   ticket.closedAt = new Date();
   ticket.closedById = closer?.id || null;
   await ticket.save();
-
+  // Remove ticket open role if configured
+  if (config?.staff?.ticketOpenRoleId) {
+    const ticketMember = await guild.members
+      .fetch(ticket.creatorId)
+      .catch(() => null);
+    if (ticketMember)
+      await ticketMember.roles
+        .remove(config.staff.ticketOpenRoleId)
+        .catch(() => {});
+  }
   // Generate transcript
   const file = await generateTranscript(channel, ticket, guild).catch(
     () => null,

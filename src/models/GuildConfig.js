@@ -52,6 +52,7 @@ const guildConfigSchema = new Schema({
     supportRoleIds: { type: [String], default: [] },
     pingRoleIds: { type: [String], default: [] },
     pingUserIds: { type: [String], default: [] },
+    ticketOpenRoleId: { type: String, default: null },
   },
 
   behavior: {

@@ -55,7 +55,12 @@ function buildPanelEditorRows() {
         .setStyle(ButtonStyle.Primary),
       new ButtonBuilder()
         .setCustomId("setup:panel:modal:extra")
-        .setLabel("Edit Footer, Author & Images")
+        .setLabel("Edit Footer & Author")
+        .setEmoji("📝")
+        .setStyle(ButtonStyle.Secondary),
+      new ButtonBuilder()
+        .setCustomId("setup:panel:modal:images")
+        .setLabel("Set Images")
         .setEmoji("🖼️")
         .setStyle(ButtonStyle.Secondary),
     ),
@@ -156,7 +161,7 @@ async function openPanelModal(interaction, sub) {
   if (sub === "extra") {
     const modal = new ModalBuilder()
       .setCustomId("setup:panel:save:extra")
-      .setTitle("Edit Footer, Author & Images")
+      .setTitle("Edit Footer & Author")
       .addComponents(
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
@@ -176,10 +181,19 @@ async function openPanelModal(interaction, sub) {
             .setValue(p.author || "")
             .setRequired(false),
         ),
+      );
+    return interaction.showModal(modal);
+  }
+
+  if (sub === "images") {
+    const modal = new ModalBuilder()
+      .setCustomId("setup:panel:save:images")
+      .setTitle("Set Panel Images (optional)")
+      .addComponents(
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
             .setCustomId("thumbnail")
-            .setLabel("Thumbnail URL")
+            .setLabel("Thumbnail URL (small image, top-right)")
             .setStyle(TextInputStyle.Short)
             .setValue(p.thumbnail || "")
             .setRequired(false),
@@ -187,7 +201,7 @@ async function openPanelModal(interaction, sub) {
         new ActionRowBuilder().addComponents(
           new TextInputBuilder()
             .setCustomId("image")
-            .setLabel("Large Image URL")
+            .setLabel("Banner Image URL (large image, bottom)")
             .setStyle(TextInputStyle.Short)
             .setValue(p.image || "")
             .setRequired(false),
@@ -217,6 +231,7 @@ async function savePanelModal(interaction, sub) {
   } else if (sub === "extra") {
     config.panel.footer = interaction.fields.getTextInputValue("footer");
     config.panel.author = interaction.fields.getTextInputValue("author");
+  } else if (sub === "images") {
     config.panel.thumbnail = interaction.fields.getTextInputValue("thumbnail");
     config.panel.image = interaction.fields.getTextInputValue("image");
   }
