@@ -1,11 +1,11 @@
-const { startAutoClose } = require('../utils/autoClose');
+const { startAutoClose } = require("../utils/autoClose");
 
 module.exports = {
-  name: 'ready',
+  name: "clientReady",
   once: true,
   async execute(client) {
     console.log(`[BOT] Logged in as ${client.user.tag}`);
-    client.user.setActivity('Support Tickets', { type: 3 }); // WATCHING
+    client.user.setActivity("Support Tickets", { type: 3 }); // WATCHING
     startAutoClose(client);
   },
 };

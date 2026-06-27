@@ -1,9 +1,14 @@
-require('dotenv').config();
-const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
-const mongoose = require('mongoose');
-const { loadCommands } = require('./handlers/commandHandler');
-const { loadEvents } = require('./handlers/eventHandler');
-const { startAutoClose } = require('./utils/autoClose');
+const {
+  Client,
+  GatewayIntentBits,
+  Partials,
+  Collection,
+} = require("discord.js");
+const mongoose = require("mongoose");
+const { loadCommands } = require("./handlers/commandHandler");
+const { loadEvents } = require("./handlers/eventHandler");
+const { startAutoClose } = require("./utils/autoClose");
+require("dotenv").config();
 
 const client = new Client({
   intents: [
@@ -19,7 +24,7 @@ client.commands = new Collection();
 
 async function main() {
   await mongoose.connect(process.env.MONGODB_URI);
-  console.log('[DB] Connected to MongoDB');
+  console.log("[DB] Connected to MongoDB");
 
   await loadCommands(client);
   await loadEvents(client);
@@ -27,8 +32,8 @@ async function main() {
   await client.login(process.env.BOT_TOKEN);
 }
 
-main().catch(err => {
-  console.error('[FATAL]', err);
+main().catch((err) => {
+  console.error("[FATAL]", err);
   process.exit(1);
 });
 
